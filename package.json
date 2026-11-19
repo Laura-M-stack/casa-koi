@@ -1,0 +1,12 @@
+{
+  "name": "casa-koi",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Demo de tienda de té y cerámica en estilo Japandi. HTML, CSS y JavaScript sin dependencias.",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=20" }
+}
