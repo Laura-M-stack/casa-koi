@@ -8,7 +8,7 @@ Demo de una tienda de té japonés y cerámica en estilo Japandi. Es un proyecto
 
 - Estilo Japandi: espacio negativo, paleta arroz, piedra, madera e índigo, tipografía Shippori Mincho y Zen Kaku Gothic New, movimientos lentos.
 - Tienda con filtro por categoría y carrito en un panel lateral (`<dialog>`), con cantidades, envío gratis desde cierto monto y persistencia en `localStorage`.
-- Ilustraciones de producto hechas como SVG propios.
+- Fotos reales de producto (Unsplash) con una ilustración SVG propia de respaldo por si una imagen no carga.
 - Accesibilidad: foco visible, foco devuelto al cerrar el carrito, botones con nombre accesible, `prefers-reduced-motion`, áreas táctiles de 44 px.
 
 ## Tecnología
@@ -31,3 +31,7 @@ site/            sitio estático (index.html, css, js, img)
 tests/           pruebas con node:test
 scripts/serve.mjs  servidor local mínimo
 ```
+
+## Créditos
+
+Fotos: [Unsplash](https://unsplash.com). Precios y stock son datos de ejemplo.

@@ -36,11 +36,17 @@ function renderFilters() {
   }));
 }
 
+// Si una foto no carga (sin conexión, enlace caído), se usa la ilustración propia.
+function withFallback(img, fallback) {
+  if (fallback) img.addEventListener('error', () => { img.src = fallback; }, { once: true });
+  return img;
+}
+
 function renderGrid() {
   const list = filterProducts(PRODUCTS, category);
   $('grid').replaceChildren(...list.map((p) => {
     const add = el('button', { class: 'btn btn-quiet', type: 'button', 'data-add': p.id, 'aria-label': `Agregar ${p.name} al carrito`, text: 'Agregar' });
-    const img = el('img', { src: p.img, alt: p.alt, width: '600', height: '600', loading: 'lazy' });
+    const img = withFallback(el('img', { src: p.img, alt: p.alt, width: '600', height: '600', loading: 'lazy' }), p.imgFallback);
     return el('li', { class: 'card' },
       el('div', { class: 'card-img' }, img),
       el('span', { class: 'card-kana', 'aria-hidden': 'true', text: p.kana }),
@@ -75,7 +81,7 @@ function renderCart() {
     const plus = el('button', { type: 'button', 'data-inc': i.id, 'aria-label': `Agregar una unidad de ${p.name}`, text: '+' });
     if (i.qty >= MAX_QTY) plus.disabled = true;
     return el('li', { class: 'line' },
-      el('img', { src: p.img, alt: '', width: '72', height: '72' }),
+      withFallback(el('img', { src: p.img, alt: '', width: '72', height: '72' }), p.imgFallback),
       el('div', {},
         el('div', { class: 'line-name', text: p.name }),
         el('div', { class: 'line-price', text: `${formatPrice(p.price)} · ${p.unit}` }),
@@ -173,3 +179,11 @@ renderFilters();
 renderGrid();
 renderCart();
 observeReveal();
+
+// La foto del héroe puede fallar antes de que este script corra: se revisa también si ya terminó mal.
+const heroImg = document.querySelector('.hero-img');
+if (heroImg) {
+  const useFallback = () => { heroImg.src = 'img/hero.svg'; };
+  heroImg.addEventListener('error', useFallback, { once: true });
+  if (heroImg.complete && heroImg.naturalWidth === 0) useFallback();
+}
